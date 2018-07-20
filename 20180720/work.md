@@ -1,4 +1,4 @@
-Riddler 2018-07-13 : Can you slice this in half?
+Riddler Work
 ================
 
 Riddler Express
@@ -8,7 +8,7 @@ From 538:
 
 > I was recently traveling in Europe and struck by the number of coins the euro uses. They have 2 euro, 1 euro, 50 cent, 20 cent, 10 cent, 5 cent, 2 cent and 1 cent coins. This got me thinking: If Riddler Nation needed to make change (anywhere from 0.01 to 0.99) and was establishing its own mint, what values of coins would be ideal to yield the smallest number of coins in any transaction? When picking values, let’s say we’re ditching the Europeans and limiting our mint to four different coin denominations — replacing the current common American ones of penny, nickel, dime and quarter.
 
-**Solution:** I first wanted to see the combinations required to make all denominations using American coins.
+**Solution:** Out of curiousity, I first wanted to see the number of coins that are required to make all denominations of 1 through 99 cents using American coins. Using the American system, you need a minimum of **9 coins** to ensure you can make change for 1 through 99 cents. Using a **winning coin combination of 1, 7, 20, and 30 cents**, we can lower than number down to **7 coins**.
 
 ``` r
 coin_checker <- function(coins){
@@ -30,8 +30,10 @@ coin_checker <- function(coins){
   return_df <- data.frame(cents = 1:99)
   
   for(r in 1:99){
+    
     roll_sum_index <- 1
     index <- NA
+    
     while(is.na(index)){
       index <- which(coin_df[[paste0('rs', roll_sum_index)]] == r)[1]
       roll_sum_index <- roll_sum_index + 1
@@ -42,6 +44,7 @@ coin_checker <- function(coins){
   
   return_df %<>% mutate(num_coins = str_count(coin_vals, ',') + 1)
   cat('Coins required:', max(return_df$num_coins))
+  
   return(return_df)
 }
 ```
