@@ -7,3 +7,11 @@ My first Riddler!
 [x] [Riddler](https://github.com/wcac26/fivethirtyeight/blob/master/20180713/work.md#riddler)
 
 [x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180713/work.md#riddler-express)
+
+## 2018-07-20: [Damn The Torpedoes — Two Puzzles Ahead!](https://fivethirtyeight.com/features/can-you-slice-this-in-half/)
+
+[ ] Riddler
+
+[x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180720/work.md#riddler-express)
+
+
