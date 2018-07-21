@@ -29,27 +29,22 @@ coin_checker <- function(coins){
   # Create a dataset that will act like a pocket of coins, and you
   # draw out n coins using rollsum. Sample size 1e5 should be enough
   # to cover all bases
-  coin_df <- 
-    data.frame(rs1 = sample(coins, size = 1e5, replace = T)) %>%
-    mutate(rs2 = rollsum(rs1, 2, fill = NA, align = 'left'),
-           rs3 = rollsum(rs1, 3, fill = NA, align = 'left'),
-           rs4 = rollsum(rs1, 4, fill = NA, align = 'left'),
-           rs5 = rollsum(rs1, 5, fill = NA, align = 'left'),
-           rs6 = rollsum(rs1, 6, fill = NA, align = 'left'),
-           rs7 = rollsum(rs1, 7, fill = NA, align = 'left'),
-           rs8 = rollsum(rs1, 8, fill = NA, align = 'left'),
-           rs9 = rollsum(rs1, 9, fill = NA, align = 'left'))
+  coin_df <- data.frame(rs1 = sample(coins, size = 1e5, replace = T))
   
   return_df <- data.frame(cents = 1:99)
   
   for(r in 1:99){
-    
     roll_sum_index <- 1
     index <- NA
     
     while(is.na(index)){
       index <- which(coin_df[[paste0('rs', roll_sum_index)]] == r)[1]
       roll_sum_index <- roll_sum_index + 1
+      
+      if(!paste0('rs', roll_sum_index) %in% colnames(coin_df)){
+        coin_df[[paste0('rs', roll_sum_index)]] <-
+          rollsum(coin_df$rs1, roll_sum_index, fill = NA, align = 'left')
+      }
     }
     return_df[r, 'coin_vals'] <- 
       paste(coin_df$rs1[index:(index + roll_sum_index - 2)] %>% sort, collapse = ', ')
