@@ -16,7 +16,7 @@ My first Riddler!
 
 ## 2018-07-27: [The Perfect Doodle Puzzle To Keep You Busy During Boring Meetings](https://fivethirtyeight.com/features/the-perfect-doodle-puzzle-to-keep-you-busy-during-boring-meetings/)
 
-[x] Riddler(https://github.com/wcac26/fivethirtyeight/blob/master/20180727/work.md#riddler)
+[x] [Riddler](https://github.com/wcac26/fivethirtyeight/blob/master/20180727/work.md#riddler)
 
 [ ] Riddler Express
 
