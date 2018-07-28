@@ -71,7 +71,7 @@ Of course, there is more to explore here. Some questions that I explore:
 
 #### What are the best starting positions based on the average number of moves that one can make?
 
-In order to answer this question, I ran a total of 25,000 simulations spanning all starting positions. Each simulation ends with a grid being completely filled on all 25 squares, or when there are no more legal moves left to make (next move will fall off the grid or visit a previously-visted space).
+In order to answer this question, I ran a total of 25,000 simulations spanning all starting positions. The simulations are pretty dumb - you pick a starting square, and you move in one of the eight directions (N, NW, W, SW, S, SE, E, NE) at random. If that direction does not work, you keep going down the list until all directions have been exhausted. Each simulation ends with a grid being completely filled on all 25 squares, or when there are no more legal moves left to make (next move will fall off the grid or visit a previously-visted space).
 
 Something to note is that the board can be simplified because the moves that you can make are symmetrical in all directions. We can divide the board up into the following six groups colored below:
 
