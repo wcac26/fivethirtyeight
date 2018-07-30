@@ -43,7 +43,8 @@ plot_grid <- function(df){
   df %>% 
     ggplot(aes(x, y)) +
     geom_tile(color = 'black', fill = 'white')  +
-    geom_text(aes(label = ifelse(visited > 0, visited, ''))) +
+    geom_text(aes(label = ifelse(visited > 0, visited, '')),
+              size = 8) +
     annotate('segment', 
              x = df_arrows$x, xend = df_arrows$end_x, 
              y = df_arrows$y, yend = df_arrows$end_y,
