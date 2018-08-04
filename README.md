@@ -20,4 +20,9 @@ My first Riddler!
 
 [ ] Riddler Express
 
+## 2018-08-03: [The Eternal Question: How Much Do These Apricots Weigh?](https://fivethirtyeight.com/features/the-eternal-question-how-much-do-these-apricots-weigh/)
+
+[ ] Riddler
+
+[x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180803/work.md#riddler-express)
 
