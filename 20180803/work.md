@@ -1,0 +1,28 @@
+Riddler 2018-08-03: The Eternal Question: How Much Do These Apricots Weigh?
+================
+
+[Link to Riddler](https://fivethirtyeight.com/features/the-eternal-question-how-much-do-these-apricots-weigh/)
+
+------------------------------------------------------------------------
+
+Riddler Express
+---------------
+
+From 538:
+
+> You loaded a drying shed containing 1,000 kilograms of apricots. They were 99 percent water. After a day in the shed, they are now 98 percent water. How much do the apricots weigh now?
+
+**Solution:** At day 0, you have 1,000 kg of apricots that are 99% water. This means that the weight is 10 kg of solid weight and 990 kg of water weight. Some of the water will evaporate, but the solid mass should still remain the same. For the apricots to be 98% water the next day, that means that you will have 10kg of solid and 490kg of water, so the **apricots weigh 500 kg**. You arrive at the solution by solving for: *(weight - 10)/(weight) = 0.98*. \_\_\_
+
+Riddler
+-------
+
+From 538:
+
+> I flip a coin. If it’s heads, I’ve won the game. If it’s tails, then I have to flip again, now needing to get two heads in a row to win. If, on my second toss, I get another tails instead of a heads, then I now need three heads in a row to win. If, instead, I get a heads on my second toss (having flipped a tails on the first toss) then I still need to get a second heads to have two heads in a row and win, but if my next toss is a tails (having thus tossed tails-heads-tails), I now need to flip three heads in a row to win, and so on. The more tails you’ve tossed, the more heads in a row you’ll need to win this game.
+
+> I may flip a potentially infinite number of times, always needing to flip a series of N heads in a row to win, where N is T + 1 and T is the number of cumulative tails tossed. I win when I flip the required number of heads in a row.
+
+> What are my chances of winning this game? (A computer program could calculate the probability to any degree of precision, but is there a more elegant mathematical expression for the probability of winning?)
+
+------------------------------------------------------------------------
