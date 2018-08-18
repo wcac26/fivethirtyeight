@@ -32,3 +32,9 @@ My first Riddler!
 
 [x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180810/work.md#riddler-express)
 
+## 2018-08-17: [Step 1: Game Theory. Step 2: ???? Step 3: Profit!](https://fivethirtyeight.com/features/step-1-game-theory-step-2-step-3-profit/)
+
+[x] [Riddler](https://github.com/wcac26/fivethirtyeight/blob/master/20180817/work.md#riddler)
+
+[x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180817/work.md#riddler-express)
+
