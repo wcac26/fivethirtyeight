@@ -26,3 +26,9 @@ My first Riddler!
 
 [x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180803/work.md#riddler-express)
 
+## 2018-08-10: [Where on Earth is the Riddler?](https://fivethirtyeight.com/features/where-on-earth-is-the-riddler/)
+
+[ ] Riddler
+
+[x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180810/work.md#riddler-express)
+
