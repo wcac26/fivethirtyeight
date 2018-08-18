@@ -77,6 +77,12 @@ cards_df %<>%
 Riddler
 -------
 
+> Ariel, Beatrice and Cassandra — three brilliant game theorists — were bored at a game theory conference (shocking, we know) and devised the following game to pass the time. They drew a number line and placed $1 on the 1, $2 on the 2, $3 on the 3 and so on to $10 on the 10.
+
+> Each player has a personalized token. They take turns — Ariel first, Beatrice second and Cassandra third — placing their tokens on one of the money stacks (only one token is allowed per space). Once the tokens are all placed, each player gets to take every stack that her token is on or is closest to. If a stack is midway between two tokens, the players split that cash.
+
+> How will this game play out? How much is it worth to go first?
+
 **Solution:** This game will result in payouts of **Ariel $23; Beatrice $17; Cassandra $15**. Therefore, the price that one should pay to go first is E\[first place money\] - E\[prize money if positions are randomly determined\]. This works out to be $23 - $18.33 = **$4.67 to go first**. That being said, the game will play out like: **Ariel: $10 -&gt; Beatrice: $6 -&gt; Cassandra: $5**
 
 **Explanation:** For this problem, I worked backwards from the 1,000 possible ending positions. The 1,000 possible ending positions are the 10 x 10 x 10 positions each player can take. From there, we see which positions result in payouts where Ariel &gt; Beatrice &gt; Cassandra where nobody can do any better by moving. We then maximize Cassandra and Beatrice's payout, maintaining the payout rule where A &gt; B &gt; C. From this, we end up with the final position in my solution.
