@@ -38,3 +38,9 @@ My first Riddler!
 
 [x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180817/work.md#riddler-express)
 
+## 2018-08-24: [How Many Hoops Will Kids Jump Through To Play Rock, Paper, Scissors? ](https://fivethirtyeight.com/features/how-many-hoops-will-kids-jump-through-to-play-rock-paper-scissors/)
+
+[x] [Riddler](https://github.com/wcac26/fivethirtyeight/blob/master/20180824/work.md#riddler)
+
+[x] [Riddler Express](https://github.com/wcac26/fivethirtyeight/blob/master/20180824/work.md#riddler-express)
+
