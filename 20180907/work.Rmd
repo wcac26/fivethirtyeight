@@ -1,0 +1,184 @@
+---
+title: "Riddler 2018-09-07: I’d Like To Use My Riddler Lifeline"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(ggthemes)
+```
+
+**[Link to Riddler](https://fivethirtyeight.com/features/id-like-to-use-my-riddler-lifeline/)**
+
+___
+
+## Riddler Express
+
+From 538:
+
+> You are a contestant on “Who Wants to Be a Riddler Millionaire.” You have already made it to a late round: You could walk away right now with $250,000. But there are two potential questions still to go that you can try to answer. You could earn $500,000 if you get one right and then walk away, or $1 million if you nail them both. If you attempt any answer and miss, you go home with $10,000.
+
+> Luckily, you still have two of your lifelines:
+
+> The 50/50: The host reduces the four possible answers to two; one of them is the correct one and the other is randomly chosen from among the other three answers.
+
+> Ask the Audience: The studio audience submits their own guesses. You know historically that the correct answer will be chosen by the plurality 50 percent of the time; while 30 percent of the time the right answer finishes second; 15 percent third; and 5 percent last. Additionally, if there are only two answers available to the audience, they pick the correct one more often 65 percent of the time.
+
+> The problem: You’re burned out. All the pressure and questions you’ve already answered have made you a babbling mess. You assess that you would have no clue on the last two questions, so you’ll be guessing randomly.
+
+> What is your best strategy to play, or stop, or use your lifelines to maximize your expected winnings?
+
+### Solution 
+
+The optimal strategy for the contestant, assuming that they are risk-neutral, is to use both lifelines for the first question (50/50 -> Ask the audience) and then walking away if correct. The expected value of this play is **$328,500**.
+
+### Work
+
+Note:
+
+* 50/50 lifeline will be abbreviated **L1**
+* Ask the Audience lifeline will be abbreviated **L2**
+
+Summary of scenarios:
+
+1. **Walk Away:** $250k
+2. **Use L1, L2 for first question and walk away if correct:** $328.5k
+    a. Expected value = E[wrong] x \$10k + E[right] x \$500k = 0.35 x \$10k + 0.65 x \$500k
+3. **Use L1, L2 for first question and guess second question if correct:** $170.88k
+    a. Expected value = E[both right] x \$1m + (1 - E[both right]) x \$10k = 0.65 x 0.25 x \$1m + 0.8375 x \$10k
+4. **Use L1 or L2 and walk away if correct:** Doesn't matter use because (2) is a strictly better strategy
+5. **Use L1 or L2 for first question, and one for the next if correct:** $257.50k
+    a. Expected value = E[both right] x \$1m + (1 - E[both right]) x \$10k = 0.5 x 0.5 x \$1m + 0.75 x \$10k
+6. **Use no lifeline for first question and both for second** $170.88k, same as (3)
+
+
+___
+
+## Riddler
+
+From 538:
+
+> My son recently started collecting Riddler League football cards and informed me that he planned on acquiring every card in the set. It made me wonder, naturally, how much of his allowance he would have to spend in order to achieve his goal. His favorite set of cards is Riddler Silver; a set consisting of 100 cards, numbered 1 to 100. The cards are only sold in packs containing 10 random cards, without duplicates, with every card number having an equal chance of being in a pack.
+
+> Each pack can be purchased for $1. If his allowance is $10 a week, how long would we expect it to take before he has the entire set?
+
+> What if he decides to collect the more expansive Riddler Gold set, which has 300 different cards?
+
+### Solution
+
+* For Riddler Silver, you expect to open **50 packs** to collect all cards. At \$10 per week, we expect to wait **5 weeks** before the entire set is collected.
+* For Ridder Gold, you expect to open **185 packs** to collect all cards. At \$10 per week, we expect to wait **19 weeks** before the entire set is collected.
+
+### Work
+
+I ran 500 simulations for each scenario, Riddler Gold and Riddler Silver. A single simulation looks at the number of packs needed to collect all cards in the respective set.
+
+```{r}
+
+# Function to see how many packs it takes to collect n cards
+# This function is pretty slow
+collect_cards <- function(total_cards_in_set = 100) {
+  
+  cards_df <- 
+    data.frame(card_num = 1:total_cards_in_set, stringsAsFactors = F) %>%
+    mutate(found_in_pack_num = 0)
+  
+  num_packs_opened <- 0
+  while(any(cards_df$found_in_pack_num == 0)){
+    
+    cards_in_pack <- sample(1:total_cards_in_set, size = 10)
+    num_packs_opened <- num_packs_opened + 1
+    cards_df %<>%
+      mutate(found_in_pack_num = ifelse(found_in_pack_num > 0, found_in_pack_num,
+                                        ifelse(card_num %in% cards_in_pack, num_packs_opened, 0)))
+    
+
+  }
+  
+  return(list(cards_df$found_in_pack_num))
+
+}
+
+```
+
+```{r}
+
+# Run replications for Riddler Silver and Gold
+set.seed(123)
+
+# To see how many packs, on average, it would take to get 100 cards
+replicate_silver <- replicate(500, collect_cards())
+num_packs_silver <- sapply(replicate_silver, max)
+
+# To see how many packs, on average, it would take to get 300 cards
+replicate_gold <- replicate(500, collect_cards(300))
+num_packs_gold <- sapply(replicate_gold, max)
+
+
+```
+
+```{r, fig.width = 10}
+
+qplot(num_packs_silver, binwidth = 2) +
+  theme_fivethirtyeight() +
+  geom_vline(xintercept = mean(num_packs_silver), color = 'orange', linetype = 'dashed') +
+  geom_text(aes(x = mean(num_packs_silver) + 2, y = 10), 
+            label = round(mean(num_packs_silver), 1),
+            color = 'orange') +
+  theme(axis.title = element_text()) +
+  labs(x = 'Number of packs to collect all 100 cards',
+       y = 'Freq',
+       title = 'Histogram of # Packs to Collect to get All Cards, Riddler Silver')
+
+qplot(num_packs_gold, binwidth = 2) +
+  theme_fivethirtyeight() +
+  geom_vline(xintercept = mean(num_packs_gold), color = 'orange', linetype = 'dashed') +
+  geom_text(aes(x = mean(num_packs_gold) + 2, y = 10), 
+            label = round(mean(num_packs_gold), 1),
+            color = 'orange') +
+  theme(axis.title = element_text()) +
+  labs(x = 'Number of packs to collect all 100 cards',
+       y = 'Freq',
+       title = 'Histogram of # Packs to Collect to get All Cards, Riddler Gold')
+```
+
+```{r, fig.width = 10}
+
+# Function to plot step function
+convert_to_step <- function(input_vec) {
+  input_vec %>%
+    table %>% 
+    as.data.frame() %>% 
+    setNames(c('pack_num', 'Freq')) %>%
+    mutate(pack_num = as.numeric(as.character(pack_num))) %>%
+    mutate(cum = cumsum(Freq)) %>% return
+}
+
+replicate_silver %>% 
+  lapply(convert_to_step) %>%
+  bind_rows(.id = 'id') %>%
+  ggplot(aes(x = pack_num, y = cum, group = id)) + 
+  geom_step(alpha = 1, size = .1) + 
+  theme_bw() +
+  ylim(0, NA) +
+  labs(x = 'Pack #',
+       y = 'Unique Cards Collected',
+       title = 'Riddler Silver Unique Cards Collected, by Pack #')
+
+replicate_gold %>% 
+  lapply(convert_to_step) %>%
+  bind_rows(.id = 'id') %>%
+  ggplot(aes(x = pack_num, y = cum, group = id)) + 
+  geom_step(alpha = 1, size = .1) + 
+  theme_bw() +
+  ylim(0, NA) +
+  labs(x = 'Pack #',
+       y = 'Unique Cards Collected',
+       title = 'Riddler Gold Unique Cards Collected, by Pack #')
+```
+
+
