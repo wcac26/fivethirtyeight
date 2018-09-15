@@ -1,0 +1,46 @@
+Riddler 2018-09-14: To Solve The Eccentric Billionaire’s Puzzle, You Must First Defeat The Banker
+================
+
+**[Link to Riddler](https://fivethirtyeight.com/features/to-solve-the-eccentric-billionaires-puzzle-you-must-first-defeat-the-banker/)**
+
+------------------------------------------------------------------------
+
+Riddler Express
+---------------
+
+From 538:
+
+> Abby and Beatrix are playing a game with two six-sided dice. Rather than having numbers on the sides like normal dice, however, the sides of these dice are either red or blue. In the game they’re playing, Abby wins if the two dice land with the same color on top. Beatrix wins if the colors are not the same. One of the dice has five blue sides and one red side.
+
+> If Abby and Beatrix have equal chances of winning the game, how many red and blue sides does the other die have?
+
+### Solution
+
+**The other die has 3 red sides and 3 blue sides.**
+
+### Work
+
+The probability of getting die with different color and die with the same color need to be the same, and this only happens when the probability of each occuring are exactly 50%. Because we know that one of the dice has 5 blue and one red, we can perform the following steps:
+
+1.  P(equal colors) = 0.5
+2.  0.5 = P(both blue) + P(both red)
+3.  0.5 = 5/6 x (n\_blue / 6) + 1/6 x (6 - n\_blue)/6
+4.  0.5 = 5 x n\_blue / 36 + (6 - n\_blue) / 36
+5.  0.5 = (6 + 4 x n\_blue) / 36
+6.  n\_blue = 3
+7.  n\_red = 6 - n\_blue = 3
+
+------------------------------------------------------------------------
+
+Riddler
+-------
+
+> An eccentric billionaire has a published a devilish math problem that she wants to see solved. Her challenge is to three-color a specific map that she likes — that is, to color its regions with only three colors while ensuring that no bordering regions are the same color. Being an eccentric billionaire, she offers $10 million to anyone who can present her with a solution.
+
+> You come up with a solution to this math problem! However, being a poor college student, you cannot come up with the $10,000 needed to travel to the billionaire’s remote island lair. You go to your local bank and ask the manager to lend you the $10,000. You explain to him that you will soon be winning $10 million, so you will easily be able to pay back the loan. But the manager is skeptical that you actually have a correct solution.
+
+> Of course, if you simply hand the manager your solution, there is nothing preventing him from throwing you out of his office and collecting the $10 million for himself. So, the question is: How do you prove to the manager that you have a solution to the problem without giving him the solution (or any part of the solution that makes it easy for him to reproduce it)?
+
+> Extra credit: What if the billionaire’s challenge was a different type of problem? Are there other types of problems that you can prove you can solve without giving away the solution?
+
+------------------------------------------------------------------------
