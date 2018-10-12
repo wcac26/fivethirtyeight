@@ -1,0 +1,100 @@
+---
+title: "Riddler 2018-10-12: So You Want To Tether Your Goat. Now What?"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(ggthemes)
+```
+
+**[Link to Riddler](https://fivethirtyeight.com/features/so-you-want-to-tether-your-goat-now-what/)**
+
+___
+
+## Riddler Express
+
+From 538:
+
+> My daughter really likes to hear me sing “The Unbirthday Song” from “Alice in Wonderland” to her. She also likes to sing it to other people. Obviously, the odds of my being able to sing it to her on any random day are 364 in 365, because I cannot sing it on her birthday. The question is, though, how many random people would she expect to be able to sing it to on any given day before it became more likely than not that she would encounter someone whose birthday it is? In other words, what is the expected length of her singing streak?
+
+### Solution 
+
+The expected length of her singing streak would be **252 people**.
+
+```{r, echo = F}
+
+data.frame(num_people = 1:500) %>%
+  mutate(prob_all_unbirthday = (364/365) ^ num_people) -> df
+
+df %>%
+  filter(prob_all_unbirthday < 0.505,
+         prob_all_unbirthday > 0.495) %>%
+  head %>%
+  mutate(prob_all_unbirthday = scales::percent(prob_all_unbirthday)) %>%
+  kable
+
+df %>%
+  ggplot(aes(x = num_people, y = prob_all_unbirthday)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent) +
+  geom_hline(yintercept = 0.5, color = 'red', linetype = 'dashed') +
+  theme_bw() +
+  labs(x = '# People Encountered that are all not birthdays',
+       y = 'Prob(all unbirthday)')
+  
+```
+
+___
+
+## Riddler
+
+> A farmer owns a circular field with radius R. If he ties up his goat to the fence that runs along the edge of the field, how long does the goat’s tether need to be so that the goat can graze on exactly half of the field, by area?
+
+### Solution
+
+The length of the goat's tether needs to be **R - R/sqrt(2)**
+
+### Explanation
+
+To get the length, all we need to do is to determine a circle within the field that has half the area of the field. Because of the tether, the goat will not be able to graze this part of the field, which means that it should be able to graze the remaining half of the field.
+
+```{r, echo = F, fig.height = 8, fig.width = 8}
+circleFun <- function(center = c(0,0),diameter = 1, npoints = 100){
+    r = diameter / 2
+    tt <- seq(0,2*pi,length.out = npoints)
+    xx <- center[1] + r * cos(tt)
+    yy <- center[2] + r * sin(tt)
+    return(data.frame(x = xx, y = yy))
+}
+
+dat <- circleFun(diameter = 2)
+ggplot(dat, aes(x,y)) + 
+  geom_polygon(fill = 'green', alpha = .3) +
+  geom_polygon(data = circleFun(diameter = 2/sqrt(2)),
+               fill = 'red', alpha = .3) +
+  geom_segment(aes(x = -1/sqrt(2), xend = -1, y = 0, yend = 0),
+               linetype = 'dotted', color = 'forestgreen') +
+    geom_segment(aes(x = 0, xend = -1/sqrt(2), y = 0, yend = 0),
+               linetype = 'dotted', color = 'red') +
+  geom_segment(aes(x = 0, xend = 1, y = 0, yend = 0)) +
+  geom_text(data = data.frame(l = 'R'),
+            aes(label = l), x = 0.5, y = 0.1) +
+    geom_text(data = data.frame(l = 'R/sqrt(2)'),
+            aes(label = l), x = -0.3, y = 0.1,
+            color = 'red') +
+  geom_text(data = data.frame(l = 'R - R/(sqrt(2))'),
+            aes(label = l), x = -.98, y = 0.1,
+            hjust = 0,
+            color = 'forestgreen') +  
+  theme_void() +
+  labs(title = 'Grazing Area: Inner Circle is Half the Area of the Big Circle')
+
+```
+
+___
+
